@@ -11,6 +11,9 @@
 </head>
 <body>
 
+  <!-- FILM-GRAIN NOISE OVERLAY -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+
   <!-- CUSTOM CURSOR -->
   <div id="cursor-dot"></div>
   <div id="cursor-ring"></div>
@@ -61,7 +64,7 @@
 
   <!-- MOBILE MENU -->
   <div id="mobile-menu">
-    <button class="mobile-close" aria-label="Close menu">✕</button>
+    <button class="mobile-close" aria-label="Close menu">&#x2715;</button>
     <ul>
       <li><a href="#about">About Us</a></li>
       <li><a href="#services">Our Services</a></li>
@@ -74,17 +77,28 @@
   <main>
 
     <!-- ================================================
-         HERO — Three.js particle canvas + parallax
+         HERO — Three.js 3D scene + multi-layer parallax
     ================================================ -->
     <section id="hero">
       <canvas id="hero-canvas"></canvas>
+
+      <!-- Depth-blur background layers -->
       <div class="hero-bg-shapes">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
+        <div class="shape shape-1" data-speed="0.3"></div>
+        <div class="shape shape-2" data-speed="0.5"></div>
+        <div class="shape shape-3" data-speed="0.15"></div>
+      </div>
+
+      <!-- Floating accent geometry -->
+      <div class="hero-floaters" aria-hidden="true">
+        <div class="hf hf-ring" data-speed="1.3"></div>
+        <div class="hf hf-dot hf-dot-1" data-speed="0.8"></div>
+        <div class="hf hf-dot hf-dot-2" data-speed="1.6"></div>
+        <div class="hf hf-line" data-speed="0.6"></div>
       </div>
 
       <div class="hero-layout container">
-        <div class="hero-text">
+        <div class="hero-text" data-speed="0.95">
           <p class="hero-eyebrow">Innovative Scent and Taste Solutions</p>
           <h1 class="hero-heading">
             Engineering<br />
@@ -95,12 +109,12 @@
           <p class="hero-sub">For the Modern Enterprise — from concept to production.</p>
           <div class="hero-ctas">
             <a href="#services" class="btn btn-primary magnetic-btn">Explore Services</a>
-            <a href="#about" class="btn btn-outline">Learn More</a>
+            <a href="#about" class="btn btn-outline magnetic-btn">Learn More</a>
           </div>
         </div>
 
-        <div class="hero-visual">
-          <div class="hero-img-wrap">
+        <div class="hero-visual" data-speed="1.08">
+          <div class="hero-img-wrap depth-card">
             <img
               src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=900&q=85"
               alt="Fragrance and flavour ingredients"
@@ -152,7 +166,7 @@
                 alt="Botanical ingredients"
                 loading="lazy"
               />
-              <div class="about-float-card">
+              <div class="about-float-card glass-card">
                 <div class="float-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14l-4-4 1.41-1.41L12 13.17l6.59-6.59L20 8l-8 8z"/></svg>
                 </div>
@@ -162,11 +176,13 @@
                 </div>
               </div>
             </div>
+            <!-- Floating accent -->
+            <div class="about-accent about-accent-1" data-speed="1.2" aria-hidden="true"></div>
           </div>
 
           <div class="about-text-col">
             <p class="section-label">Who We Are</p>
-            <h2 class="section-heading">
+            <h2 class="section-heading perspective-reveal">
               Redefining<br /><em>Sensory</em><br />Experiences
             </h2>
             <p class="about-body">
@@ -228,20 +244,20 @@
     ================================================ -->
     <div class="marquee-section">
       <div class="marquee-track" aria-hidden="true">
-        <span>Fine Fragrances</span><span class="dot">✦</span>
-        <span>Dairy &amp; Bakery</span><span class="dot">✦</span>
-        <span>Beverage Solutions</span><span class="dot">✦</span>
-        <span>Seasoning Solutions</span><span class="dot">✦</span>
-        <span>Confectionery</span><span class="dot">✦</span>
-        <span>Snacks &amp; Savory</span><span class="dot">✦</span>
-        <span>Nutraceuticals</span><span class="dot">✦</span>
-        <span>Fine Fragrances</span><span class="dot">✦</span>
-        <span>Dairy &amp; Bakery</span><span class="dot">✦</span>
-        <span>Beverage Solutions</span><span class="dot">✦</span>
-        <span>Seasoning Solutions</span><span class="dot">✦</span>
-        <span>Confectionery</span><span class="dot">✦</span>
-        <span>Snacks &amp; Savory</span><span class="dot">✦</span>
-        <span>Nutraceuticals</span><span class="dot">✦</span>
+        <span>Fine Fragrances</span><span class="dot">&#x2726;</span>
+        <span>Dairy &amp; Bakery</span><span class="dot">&#x2726;</span>
+        <span>Beverage Solutions</span><span class="dot">&#x2726;</span>
+        <span>Seasoning Solutions</span><span class="dot">&#x2726;</span>
+        <span>Confectionery</span><span class="dot">&#x2726;</span>
+        <span>Snacks &amp; Savory</span><span class="dot">&#x2726;</span>
+        <span>Nutraceuticals</span><span class="dot">&#x2726;</span>
+        <span>Fine Fragrances</span><span class="dot">&#x2726;</span>
+        <span>Dairy &amp; Bakery</span><span class="dot">&#x2726;</span>
+        <span>Beverage Solutions</span><span class="dot">&#x2726;</span>
+        <span>Seasoning Solutions</span><span class="dot">&#x2726;</span>
+        <span>Confectionery</span><span class="dot">&#x2726;</span>
+        <span>Snacks &amp; Savory</span><span class="dot">&#x2726;</span>
+        <span>Nutraceuticals</span><span class="dot">&#x2726;</span>
       </div>
     </div>
 
@@ -253,7 +269,7 @@
 
         <div class="services-intro">
           <p class="section-label">What We Do</p>
-          <h2 class="section-heading">Our Core <em>Services</em></h2>
+          <h2 class="section-heading perspective-reveal">Our Core <em>Services</em></h2>
         </div>
 
         <div class="services-split">
@@ -327,7 +343,7 @@
           </div>
 
           <!-- Right: cinematic image panel -->
-          <div class="services-visual-panel">
+          <div class="services-visual-panel depth-card">
             <div class="svc-vp-img active" data-panel="0">
               <img src="https://images.unsplash.com/photo-1471997695602-d4f9e3f34327?auto=format&fit=crop&w=1000&q=90"
                    alt="Ingredient Sourcing — botanical ingredients" loading="eager" />
@@ -367,7 +383,7 @@
     <section id="segments" class="section-segments">
       <div class="container">
         <p class="section-label">Industries We Serve</p>
-        <h2 class="section-heading">Sensory Solutions<br /><em>Across Segments</em></h2>
+        <h2 class="section-heading perspective-reveal">Sensory Solutions<br /><em>Across Segments</em></h2>
       </div>
 
       <div class="segments-track-outer">
@@ -433,9 +449,9 @@
         <div class="blog-header">
           <div>
             <p class="section-label">Latest from Us</p>
-            <h2 class="section-heading">Flavorful <em>Insights</em></h2>
+            <h2 class="section-heading perspective-reveal">Flavorful <em>Insights</em></h2>
           </div>
-          <a href="/blog-list/" class="btn btn-outline">View All</a>
+          <a href="/blog-list/" class="btn btn-outline magnetic-btn">View All</a>
         </div>
 
         <div class="blog-grid">
@@ -448,10 +464,10 @@
             <div class="blog-body">
               <span class="blog-tag">Blog</span>
               <h3>Top 5 challenges in modern drug discovery</h3>
-              <p class="blog-excerpt">Sed ut perspiciatis unde omnis iste natus ut perspic iatis…</p>
+              <p class="blog-excerpt">Sed ut perspiciatis unde omnis iste natus ut perspic iatis...</p>
               <div class="blog-meta">
                 <time>September 24, 2024</time>
-                <a href="/top-5-challenges-in-modern-drug-discovery/" class="read-link">Read →</a>
+                <a href="/top-5-challenges-in-modern-drug-discovery/" class="read-link">Read &rarr;</a>
               </div>
             </div>
           </article>
@@ -464,10 +480,10 @@
             <div class="blog-body">
               <span class="blog-tag">Blog</span>
               <h3>From concept to cure: drug discovery steps</h3>
-              <p class="blog-excerpt">Sed ut perspiciatis unde omnis iste natus ut perspic iatis…</p>
+              <p class="blog-excerpt">Sed ut perspiciatis unde omnis iste natus ut perspic iatis...</p>
               <div class="blog-meta">
                 <time>September 23, 2024</time>
-                <a href="/from-concept-to-cure-drug-discovery-steps/" class="read-link">Read →</a>
+                <a href="/from-concept-to-cure-drug-discovery-steps/" class="read-link">Read &rarr;</a>
               </div>
             </div>
           </article>
@@ -480,10 +496,10 @@
             <div class="blog-body">
               <span class="blog-tag">Blog</span>
               <h3>Emerging trends in targeted drug discovery</h3>
-              <p class="blog-excerpt">Sed ut perspiciatis unde omnis iste natus ut perspic iatis…</p>
+              <p class="blog-excerpt">Sed ut perspiciatis unde omnis iste natus ut perspic iatis...</p>
               <div class="blog-meta">
                 <time>September 22, 2024</time>
-                <a href="/emerging-trends-in-targeted-drug-discovery/" class="read-link">Read →</a>
+                <a href="/emerging-trends-in-targeted-drug-discovery/" class="read-link">Read &rarr;</a>
               </div>
             </div>
           </article>
@@ -507,7 +523,7 @@
           <h2>Have questions?<br /><em>Get in touch!</em></h2>
           <div class="cta-btns">
             <a href="/contact/" class="btn btn-white magnetic-btn">Send Brief</a>
-            <a href="/request-a-quote/" class="btn btn-outline-white">Request a Quote</a>
+            <a href="/request-a-quote/" class="btn btn-outline-white magnetic-btn">Request a Quote</a>
           </div>
         </div>
       </div>
@@ -530,7 +546,7 @@
 
           <div class="contact-form-col">
             <p class="section-label">Get In Touch</p>
-            <h2 class="section-heading">Have questions?<br /><em>Get in touch!</em></h2>
+            <h2 class="section-heading perspective-reveal">Have questions?<br /><em>Get in touch!</em></h2>
 
             <div class="contact-info-list">
               <div class="ci">
