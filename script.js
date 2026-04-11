@@ -1,6 +1,6 @@
 /* ==============================================
    PAIRSENSE — PREMIUM INTERACTIVE SCRIPT
-   GSAP · ScrollTrigger · Three.js · Matter.js
+   GSAP · ScrollTrigger · Three.js
    ============================================== */
 
 gsap.registerPlugin(ScrollTrigger);
@@ -121,108 +121,88 @@ function initThreeHero() {
 }
 
 /* ================================================
-   MATTER.JS — Physics ingredient universe
+   CUSTOM CURSOR
    =============================================== */
-function initPhysics() {
-  const canvas = document.getElementById('physics-canvas');
-  if (!canvas || typeof Matter === 'undefined') return;
+(function initCursor() {
+  const dot  = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  const glow = document.getElementById('cursor-glow');
 
-  const { Engine, Render, Runner, Bodies, Body, Events,
-          Mouse, MouseConstraint, Composite, World } = Matter;
+  // Only on true pointer devices (not touch)
+  if (!dot || !ring || !window.matchMedia('(pointer: fine)').matches) return;
 
-  const W = canvas.clientWidth  || window.innerWidth;
-  const H = 520;
-  canvas.width  = W;
-  canvas.height = H;
+  let dotX = -100, dotY = -100;
+  let ringX = -100, ringY = -100;
+  let glowX = -100, glowY = -100;
 
-  const engine = Engine.create({ gravity: { x: 0, y: 0.35 } });
-
-  const render = Render.create({
-    canvas,
-    engine,
-    options: {
-      width: W,
-      height: H,
-      wireframes: false,
-      background: 'transparent',
+  document.addEventListener('mousemove', e => {
+    dotX = e.clientX;
+    dotY = e.clientY;
+    dot.style.left = dotX + 'px';
+    dot.style.top  = dotY + 'px';
+    if (glow) {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top  = e.clientY + 'px';
     }
   });
 
-  // Walls (invisible)
-  const wall = (x, y, w, h) =>
-    Bodies.rectangle(x, y, w, h, { isStatic: true, render: { fillStyle: 'transparent', strokeStyle: 'transparent' } });
+  // Ring follows with smooth lag
+  (function ringLoop() {
+    ringX += (dotX - ringX) * 0.11;
+    ringY += (dotY - ringY) * 0.11;
+    ring.style.left = ringX + 'px';
+    ring.style.top  = ringY + 'px';
+    requestAnimationFrame(ringLoop);
+  })();
 
-  World.add(engine.world, [
-    wall(W / 2, H + 30, W, 60),
-    wall(W / 2, -30, W, 60),
-    wall(-30, H / 2, 60, H),
-    wall(W + 30, H / 2, 60, H),
-  ]);
-
-  // Ingredient balls
-  const ingredients = [
-    'Vanilla', 'Rose', 'Jasmine', 'Bergamot', 'Citrus',
-    'Cedar', 'Vetiver', 'Musk', 'Amber', 'Sandalwood',
-    'Lavender', 'Neroli', 'Ylang', 'Patchouli',
-  ];
-  const palette = ['#b8813a', '#c49a3d', '#a0722f', '#5e8c55', '#8b6914', '#d4a85c'];
-
-  ingredients.forEach((name, i) => {
-    const r  = Math.random() * 22 + 36;
-    const x  = r + Math.random() * (W - r * 2);
-    const y  = r + Math.random() * (H * 0.55);
-    const body = Bodies.circle(x, y, r, {
-      restitution: 0.62,
-      friction: 0.08,
-      frictionAir: 0.01,
-      render: {
-        fillStyle: palette[i % palette.length],
-        strokeStyle: 'rgba(255,255,255,0.15)',
-        lineWidth: 1,
-      },
-      label: name,
-    });
-    Body.setVelocity(body, { x: (Math.random() - 0.5) * 4, y: (Math.random() - 0.5) * 4 });
-    World.add(engine.world, body);
+  // Expand ring on interactive elements
+  const hoverables = 'a, button, .tilt-card, .seg-card, .blog-card, .svc-item, input, textarea';
+  document.querySelectorAll(hoverables).forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
   });
 
-  // Mouse interaction
-  const mouse = Mouse.create(canvas);
-  const mc    = MouseConstraint.create(engine, {
-    mouse,
-    constraint: { stiffness: 0.25, render: { visible: false } },
-  });
-  World.add(engine.world, mc);
+  document.addEventListener('mouseleave', () => document.body.classList.add('cursor-hidden'));
+  document.addEventListener('mouseenter', () => document.body.classList.remove('cursor-hidden'));
+})();
 
-  // Draw ingredient labels after Matter renders
-  Events.on(render, 'afterRender', () => {
-    const ctx = render.context;
-    ctx.font = `600 11px Inter, sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
+/* ================================================
+   SCROLL PROGRESS BAR
+   =============================================== */
+(function initScrollProgress() {
+  const bar = document.getElementById('scroll-progress');
+  if (!bar) return;
+  const update = () => {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (window.scrollY / total * 100).toFixed(2) + '%';
+  };
+  window.addEventListener('scroll', update, { passive: true });
+})();
 
-    Composite.allBodies(engine.world).forEach(b => {
-      if (!b.label || !ingredients.includes(b.label)) return;
-      ctx.save();
-      ctx.translate(b.position.x, b.position.y);
-      ctx.rotate(b.angle);
-      ctx.fillStyle = 'rgba(255,255,255,0.9)';
-      ctx.fillText(b.label, 0, 0);
-      ctx.restore();
+/* ================================================
+   SERVICES ACCORDION
+   =============================================== */
+(function initServicesAccordion() {
+  const items  = document.querySelectorAll('.svc-item');
+  const panels = document.querySelectorAll('.svc-vp-img');
+  if (!items.length) return;
+
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      const idx = item.dataset.idx;
+
+      // If already active, do nothing (always keep one open)
+      if (item.classList.contains('active')) return;
+
+      items.forEach(i  => i.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+
+      item.classList.add('active');
+      const panel = document.querySelector(`.svc-vp-img[data-panel="${idx}"]`);
+      if (panel) panel.classList.add('active');
     });
   });
-
-  Render.run(render);
-  Runner.run(Runner.create(), engine);
-
-  // Lazy-init: only start when section is in view
-  ScrollTrigger.create({
-    trigger: '.section-physics',
-    start: 'top 80%',
-    once: true,
-    onEnter: () => { /* already running */ },
-  });
-}
+})();
 
 /* ================================================
    HERO ENTRANCE ANIMATION
@@ -329,36 +309,16 @@ document.querySelectorAll('.stat-num').forEach(el => {
 });
 
 /* ================================================
-   HORIZONTAL SERVICES SCROLL
+   SERVICES — scroll-reveal animation
    =============================================== */
-(function initHorizontalServices() {
-  const outer = document.querySelector('.services-sticky-outer');
-  const inner = document.querySelector('.services-sticky-inner');
-  const track = document.getElementById('servicesHTrack');
-  const bar   = document.getElementById('servicesProgress');
-  if (!outer || !track || window.innerWidth < 1025) return;
-
-  // Compute how far to scroll horizontally
-  function getScrollX() {
-    return -(track.scrollWidth - (inner.clientWidth - inner.clientWidth * 0.1));
-  }
-
-  gsap.to(track, {
-    x: getScrollX,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: outer,
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: 1.4,
-      onUpdate(self) {
-        if (bar) bar.style.width = (self.progress * 100) + '%';
-      },
-    },
-  });
-
-  window.addEventListener('resize', () => ScrollTrigger.refresh());
-})();
+gsap.from('.svc-item', {
+  opacity: 0, x: -30, stagger: 0.12, duration: 0.85, ease: 'power3.out',
+  scrollTrigger: { trigger: '.services-list', start: 'top 82%' },
+});
+gsap.from('.services-visual-panel', {
+  opacity: 0, scale: 0.96, duration: 1.0, ease: 'power3.out',
+  scrollTrigger: { trigger: '.services-visual-panel', start: 'top 82%' },
+});
 
 /* ================================================
    3D CARD TILT — all .tilt-card elements
@@ -468,16 +428,10 @@ gsap.from('.stat-item', {
   scrollTrigger: { trigger: '.stats-row', start: 'top 82%' },
 });
 
-// Physics section header
-gsap.from('.physics-header > *', {
-  opacity: 0, y: 30, stagger: 0.12, duration: 0.85, ease: 'power3.out',
-  scrollTrigger: { trigger: '.section-physics', start: 'top 80%' },
-});
-
-// Services header
-gsap.from('.services-h-header > *', {
+// Services intro
+gsap.from('.services-intro > *', {
   opacity: 0, y: 28, stagger: 0.1, duration: 0.85, ease: 'power3.out',
-  scrollTrigger: { trigger: '.services-sticky-inner', start: 'top 85%' },
+  scrollTrigger: { trigger: '.section-services', start: 'top 82%' },
 });
 
 // Segment cards
@@ -579,8 +533,3 @@ if (form) {
   });
 }
 
-/* ================================================
-   INIT MATTER.JS — run immediately so physics
-   warms up before user scrolls there
-   =============================================== */
-initPhysics();

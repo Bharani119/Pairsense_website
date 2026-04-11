@@ -11,6 +11,14 @@
 </head>
 <body>
 
+  <!-- CUSTOM CURSOR -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+  <!-- AMBIENT GLOW -->
+  <div id="cursor-glow"></div>
+  <!-- SCROLL PROGRESS -->
+  <div id="scroll-progress"></div>
+
   <!-- ================================================
        PAGE LOADER — cinematic split-panel reveal
   ================================================ -->
@@ -238,94 +246,115 @@
     </div>
 
     <!-- ================================================
-         PHYSICS — Ingredient Universe
-    ================================================ -->
-    <section class="section-physics">
-      <div class="container physics-header">
-        <p class="section-label">The Science of Taste &amp; Scent</p>
-        <h2 class="section-heading">Where <em>Ingredients</em><br />Come Alive</h2>
-        <p class="physics-sub">Drag to interact with our ingredient universe.</p>
-      </div>
-      <canvas id="physics-canvas"></canvas>
-    </section>
-
-    <!-- ================================================
-         CORE SERVICES — Horizontal sticky scroll
+         CORE SERVICES — Interactive split-panel accordion
     ================================================ -->
     <section id="services" class="section-services">
-      <div class="services-sticky-outer">
-        <div class="services-sticky-inner">
+      <div class="container">
 
-          <div class="services-h-header container">
-            <p class="section-label">What We Do</p>
-            <h2 class="section-heading">Our Core <em>Services</em></h2>
-            <div class="services-scroll-cue">
-              <span>Scroll to explore</span>
-              <svg width="40" height="12" viewBox="0 0 40 12" fill="none">
-                <path d="M0 6h38M32 1l6 5-6 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </div>
+        <div class="services-intro">
+          <p class="section-label">What We Do</p>
+          <h2 class="section-heading">Our Core <em>Services</em></h2>
+        </div>
 
-          <div class="services-h-track-wrap">
-            <div class="services-h-track" id="servicesHTrack">
+        <div class="services-split">
 
-              <div class="svc-card tilt-card">
-                <div class="svc-num">01</div>
-                <div class="svc-icon">
-                  <img src="https://pairsense.co/wp-content/uploads/2026/04/1-e1775446355880.png"
-                       alt="Ingredient Sourcing" onerror="this.style.display='none'" />
-                </div>
-                <div class="svc-body">
+          <!-- Left: accordion list -->
+          <div class="services-list" id="servicesList">
+
+            <div class="svc-item active" data-idx="0">
+              <div class="svc-item-top">
+                <span class="svc-item-num">01</span>
+                <div class="svc-item-mid">
+                  <div class="svc-item-icon">
+                    <img src="https://pairsense.co/wp-content/uploads/2026/04/1-e1775446355880.png"
+                         alt="Ingredient Sourcing" onerror="this.style.display='none'" />
+                  </div>
                   <h3>Ingredient Sourcing</h3>
-                  <p>Curating exceptional aroma molecules and refined extracts from global partners to craft a sophisticated and enduring sensory foundation.</p>
                 </div>
-                <div class="svc-visual">
-                  <img src="https://images.unsplash.com/photo-1464297162577-f5295c892194?auto=format&fit=crop&w=600&q=80"
-                       alt="Botanical ingredients" loading="lazy" />
-                </div>
-                <div class="svc-hover-glow"></div>
+                <span class="svc-item-chevron">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
               </div>
-
-              <div class="svc-card tilt-card">
-                <div class="svc-num">02</div>
-                <div class="svc-icon">
-                  <img src="https://pairsense.co/wp-content/uploads/2026/04/2-e1775446339360.png"
-                       alt="Custom Formulation" onerror="this.style.display='none'" />
-                </div>
-                <div class="svc-body">
-                  <h3>Custom Formulation</h3>
-                  <p>Advanced formulation by intelligent flavourists and perfumers, engineering high-precision molecular composition tailored for application-specific performance, consistency and scalability.</p>
-                </div>
-                <div class="svc-visual">
-                  <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=600&q=80"
-                       alt="Formulation laboratory" loading="lazy" />
-                </div>
-                <div class="svc-hover-glow"></div>
+              <div class="svc-item-desc">
+                <p>Curating exceptional aroma molecules and refined extracts from global partners to craft a sophisticated and enduring sensory foundation.</p>
               </div>
-
-              <div class="svc-card tilt-card">
-                <div class="svc-num">03</div>
-                <div class="svc-icon">
-                  <img src="https://pairsense.co/wp-content/uploads/2026/04/3-e1775446378363.png"
-                       alt="Sensory Validation" onerror="this.style.display='none'" />
-                </div>
-                <div class="svc-body">
-                  <h3>Sensory Validation</h3>
-                  <p>Comprehensive evaluation of stability, diffusion, and sensory integrity to ensure consistent performance across real-world applications and production environments.</p>
-                </div>
-                <div class="svc-visual">
-                  <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=600&q=80"
-                       alt="Sensory validation testing" loading="lazy" />
-                </div>
-                <div class="svc-hover-glow"></div>
-              </div>
-
             </div>
+
+            <div class="svc-item" data-idx="1">
+              <div class="svc-item-top">
+                <span class="svc-item-num">02</span>
+                <div class="svc-item-mid">
+                  <div class="svc-item-icon">
+                    <img src="https://pairsense.co/wp-content/uploads/2026/04/2-e1775446339360.png"
+                         alt="Custom Formulation" onerror="this.style.display='none'" />
+                  </div>
+                  <h3>Custom Formulation</h3>
+                </div>
+                <span class="svc-item-chevron">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="svc-item-desc">
+                <p>Advanced formulation by intelligent flavourists and perfumers, engineering high-precision molecular composition tailored for application-specific performance, consistency and scalability.</p>
+              </div>
+            </div>
+
+            <div class="svc-item" data-idx="2">
+              <div class="svc-item-top">
+                <span class="svc-item-num">03</span>
+                <div class="svc-item-mid">
+                  <div class="svc-item-icon">
+                    <img src="https://pairsense.co/wp-content/uploads/2026/04/3-e1775446378363.png"
+                         alt="Sensory Validation" onerror="this.style.display='none'" />
+                  </div>
+                  <h3>Sensory Validation</h3>
+                </div>
+                <span class="svc-item-chevron">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="svc-item-desc">
+                <p>Comprehensive evaluation of stability, diffusion, and sensory integrity to ensure consistent performance across real-world applications and production environments.</p>
+              </div>
+            </div>
+
           </div>
 
-          <div class="services-h-progress">
-            <div class="services-h-progress-fill" id="servicesProgress"></div>
+          <!-- Right: cinematic image panel -->
+          <div class="services-visual-panel">
+            <div class="svc-vp-img active" data-panel="0">
+              <img src="https://images.unsplash.com/photo-1471997695602-d4f9e3f34327?auto=format&fit=crop&w=1000&q=90"
+                   alt="Ingredient Sourcing — botanical ingredients" loading="eager" />
+              <div class="svc-vp-overlay"></div>
+              <div class="svc-vp-caption">
+                <span class="svc-vp-num">01</span>
+                <span class="svc-vp-label">Ingredient Sourcing</span>
+              </div>
+            </div>
+            <div class="svc-vp-img" data-panel="1">
+              <img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=1000&q=90"
+                   alt="Custom Formulation — fragrance creation" loading="lazy" />
+              <div class="svc-vp-overlay"></div>
+              <div class="svc-vp-caption">
+                <span class="svc-vp-num">02</span>
+                <span class="svc-vp-label">Custom Formulation</span>
+              </div>
+            </div>
+            <div class="svc-vp-img" data-panel="2">
+              <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=1000&q=90"
+                   alt="Sensory Validation — quality testing" loading="lazy" />
+              <div class="svc-vp-overlay"></div>
+              <div class="svc-vp-caption">
+                <span class="svc-vp-num">03</span>
+                <span class="svc-vp-label">Sensory Validation</span>
+              </div>
+            </div>
           </div>
 
         </div>
@@ -346,7 +375,7 @@
 
           <div class="seg-card tilt-card">
             <div class="seg-img">
-              <img src="https://images.unsplash.com/photo-1541711083894-dc02c46d2c01?auto=format&fit=crop&w=700&q=80"
+              <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=700&q=85"
                    alt="Fine Fragrances" loading="lazy" />
             </div>
             <div class="seg-info">
@@ -358,7 +387,7 @@
 
           <div class="seg-card tilt-card">
             <div class="seg-img">
-              <img src="https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&w=700&q=80"
+              <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=700&q=85"
                    alt="Food Segments" loading="lazy" />
             </div>
             <div class="seg-info">
@@ -370,7 +399,7 @@
 
           <div class="seg-card tilt-card">
             <div class="seg-img">
-              <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=700&q=80"
+              <img src="https://images.unsplash.com/photo-1505576399279-565b52d4ac71?auto=format&fit=crop&w=700&q=85"
                    alt="Seasoning Solutions" loading="lazy" />
             </div>
             <div class="seg-info">
@@ -382,7 +411,7 @@
 
           <div class="seg-card tilt-card">
             <div class="seg-img">
-              <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=700&q=80"
+              <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=700&q=85"
                    alt="Beverage Solutions" loading="lazy" />
             </div>
             <div class="seg-info">
@@ -618,7 +647,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
