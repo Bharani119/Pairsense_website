@@ -6,142 +6,320 @@
   <title>PairSense — Engineering Flavors. Crafting Fragrances.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- FILM-GRAIN NOISE OVERLAY -->
-  <div class="noise-overlay" aria-hidden="true"></div>
+  <!-- GRAIN TEXTURE -->
+  <div class="grain" aria-hidden="true"></div>
 
   <!-- CUSTOM CURSOR -->
-  <div id="cursor-dot"></div>
-  <div id="cursor-ring"></div>
-  <!-- AMBIENT GLOW -->
-  <div id="cursor-glow"></div>
-  <!-- SCROLL PROGRESS -->
-  <div id="scroll-progress"></div>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
 
-  <!-- ================================================
-       PAGE LOADER — cinematic split-panel reveal
-  ================================================ -->
+  <!-- SCROLL PROGRESS -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- =============================================
+       LOADER
+  ============================================= -->
   <div id="loader">
-    <div class="loader-panel loader-panel--top"></div>
-    <div class="loader-panel loader-panel--bottom"></div>
-    <div class="loader-center">
-      <img src="https://pairsense.co/wp-content/uploads/2026/04/PairSense-Logo-scaled-e1775438482522.png"
-           alt="PairSense" class="loader-logo"
-           onerror="this.style.display='none'" />
-      <div class="loader-counter-wrap">
-        <span id="loaderCount">0</span><span class="loader-pct">%</span>
-      </div>
-      <div class="loader-progress-track">
-        <div class="loader-progress-fill" id="loaderFill"></div>
-      </div>
-      <p class="loader-tagline">Engineering Flavors. Crafting Fragrances.</p>
+    <div class="loader-left"></div>
+    <div class="loader-right"></div>
+    <div class="loader-content">
+      <div class="loader-line"></div>
+      <span class="loader-text">PairSense</span>
+      <div class="loader-counter" id="loaderCounter">0</div>
     </div>
   </div>
 
-  <!-- NAV -->
-  <nav id="navbar">
-    <a href="#" class="nav-logo">
+  <!-- =============================================
+       NAVIGATION
+  ============================================= -->
+  <header id="nav">
+    <a href="#" class="nav-brand">
       <img src="https://pairsense.co/wp-content/uploads/2026/04/PairSense-Logo-scaled-e1775438482522.png"
-           alt="PairSense"
-           onerror="this.outerHTML='<span class=nav-logo-text>Pair<em>Sense</em></span>'" />
+           alt="PairSense" class="nav-logo-img"
+           onerror="this.outerHTML='<span class=brand-text>Pair<em>Sense</em></span>'" />
     </a>
-    <ul class="nav-links">
-      <li><a href="#about">About Us</a></li>
-      <li><a href="#services">Our Services</a></li>
-      <li><a href="#segments">Segments</a></li>
-      <li><a href="#blog">Blog</a></li>
-      <li><a href="#contact">Contact Us</a></li>
-    </ul>
-    <a href="#contact" class="nav-cta">Get in Touch</a>
-    <button class="nav-burger" aria-label="Toggle menu">
-      <span></span><span></span>
-    </button>
-  </nav>
 
-  <!-- MOBILE MENU -->
-  <div id="mobile-menu">
-    <button class="mobile-close" aria-label="Close menu">&#x2715;</button>
-    <ul>
-      <li><a href="#about">About Us</a></li>
-      <li><a href="#services">Our Services</a></li>
-      <li><a href="#segments">Segments</a></li>
-      <li><a href="#blog">Blog</a></li>
-      <li><a href="#contact">Contact Us</a></li>
-    </ul>
+    <nav class="nav-menu">
+      <a href="#about" class="nav-link">About</a>
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#segments" class="nav-link">Segments</a>
+      <a href="#journal" class="nav-link">Journal</a>
+      <a href="#contact" class="nav-link nav-link--cta">Contact</a>
+    </nav>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- MOBILE OVERLAY -->
+  <div class="mobile-nav" id="mobileNav">
+    <nav>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#segments">Segments</a>
+      <a href="#journal">Journal</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </div>
 
   <main>
 
-    <!-- ================================================
-         HERO — Three.js 3D scene + multi-layer parallax
-    ================================================ -->
+    <!-- =============================================
+         HERO — Full-screen cinematic
+    ============================================= -->
     <section id="hero">
-      <canvas id="hero-canvas"></canvas>
-
-      <!-- Depth-blur background layers -->
-      <div class="hero-bg-shapes">
-        <div class="shape shape-1" data-speed="0.3"></div>
-        <div class="shape shape-2" data-speed="0.5"></div>
-        <div class="shape shape-3" data-speed="0.15"></div>
+      <div class="hero-bg">
+        <img src="https://images.unsplash.com/photo-1615634260167-c8cdede054de?auto=format&fit=crop&w=1920&q=90"
+             alt="" aria-hidden="true" class="hero-bg-img" />
+        <div class="hero-overlay"></div>
       </div>
 
-      <!-- Floating accent geometry -->
-      <div class="hero-floaters" aria-hidden="true">
-        <div class="hf hf-ring" data-speed="1.3"></div>
-        <div class="hf hf-dot hf-dot-1" data-speed="0.8"></div>
-        <div class="hf hf-dot hf-dot-2" data-speed="1.6"></div>
-        <div class="hf hf-line" data-speed="0.6"></div>
-      </div>
-
-      <div class="hero-layout container">
-        <div class="hero-text" data-speed="0.95">
-          <p class="hero-eyebrow">Innovative Scent and Taste Solutions</p>
-          <h1 class="hero-heading">
-            Engineering<br />
-            <em>Flavors.</em><br />
-            Crafting<br />
-            <em>Fragrances.</em>
-          </h1>
-          <p class="hero-sub">For the Modern Enterprise — from concept to production.</p>
-          <div class="hero-ctas">
-            <a href="#services" class="btn btn-primary magnetic-btn">Explore Services</a>
-            <a href="#about" class="btn btn-outline magnetic-btn">Learn More</a>
-          </div>
-        </div>
-
-        <div class="hero-visual" data-speed="1.08">
-          <div class="hero-img-wrap depth-card">
-            <img
-              src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=900&q=85"
-              alt="Fragrance and flavour ingredients"
-              class="hero-img"
-              loading="eager"
-            />
-            <div class="hero-badge">
-              <span class="badge-label">For the</span>
-              <span class="badge-headline">Modern Enterprise</span>
-            </div>
-          </div>
+      <div class="hero-content">
+        <p class="hero-tag reveal-text">Innovative Scent &amp; Taste Solutions</p>
+        <h1 class="hero-title">
+          <span class="title-line reveal-text">Engineering</span>
+          <span class="title-line title-line--italic reveal-text">Flavors.</span>
+          <span class="title-line reveal-text">Crafting</span>
+          <span class="title-line title-line--italic reveal-text">Fragrances.</span>
+        </h1>
+        <p class="hero-sub reveal-text">From concept to production — for the modern enterprise.</p>
+        <div class="hero-actions reveal-text">
+          <a href="#services" class="btn-main magnetic">Explore Services</a>
+          <a href="#about" class="btn-ghost magnetic">Learn More</a>
         </div>
       </div>
 
-      <div class="hero-scroll-hint">
-        <div class="scroll-line"></div>
+      <div class="hero-scroll">
+        <div class="scroll-indicator"></div>
         <span>Scroll</span>
+      </div>
+
+      <div class="hero-meta">
+        <span>Est. 2011</span>
+        <span>Chennai, India</span>
       </div>
     </section>
 
-    <!-- ================================================
-         CLIENT LOGOS STRIP
-    ================================================ -->
-    <section class="section-clients">
+    <!-- =============================================
+         MARQUEE
+    ============================================= -->
+    <div class="marquee">
+      <div class="marquee-inner" aria-hidden="true">
+        <span>Fine Fragrances</span><span class="sep">/</span>
+        <span>Dairy &amp; Bakery</span><span class="sep">/</span>
+        <span>Beverage Solutions</span><span class="sep">/</span>
+        <span>Seasoning</span><span class="sep">/</span>
+        <span>Confectionery</span><span class="sep">/</span>
+        <span>Nutraceuticals</span><span class="sep">/</span>
+        <span>Fine Fragrances</span><span class="sep">/</span>
+        <span>Dairy &amp; Bakery</span><span class="sep">/</span>
+        <span>Beverage Solutions</span><span class="sep">/</span>
+        <span>Seasoning</span><span class="sep">/</span>
+        <span>Confectionery</span><span class="sep">/</span>
+        <span>Nutraceuticals</span><span class="sep">/</span>
+      </div>
+    </div>
+
+    <!-- =============================================
+         ABOUT — Split screen
+    ============================================= -->
+    <section id="about" class="section">
+      <div class="about-split">
+        <div class="about-left">
+          <div class="about-img-wrap parallax-img">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=900&q=85"
+                 alt="Botanical ingredients" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="about-right">
+          <span class="label anim-up">Who We Are</span>
+          <h2 class="section-title anim-up">
+            Redefining<br /><em>Sensory</em><br />Experiences
+          </h2>
+          <p class="body-text anim-up">
+            We are a flavor and fragrance company focused on developing high-performance sensory solutions tailored to real-world products. From concept to production, we work closely with brands to create distinctive profiles that align with their vision, application, and market positioning.
+          </p>
+          <p class="body-text anim-up">
+            Defining New-Gen taste and scent worldwide for ambitious brands.
+          </p>
+
+          <div class="about-tags anim-up">
+            <span class="tag">Concept to Creation</span>
+            <span class="tag">Ingredient Intelligence</span>
+            <span class="tag">Application Compatibility</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATS BAR -->
+      <div class="stats-bar">
+        <div class="stat anim-up">
+          <div class="stat-val"><span class="counter" data-target="200">0</span>+</div>
+          <div class="stat-label">Formulations Delivered</div>
+        </div>
+        <div class="stat anim-up">
+          <div class="stat-val"><span class="counter" data-target="50">0</span>+</div>
+          <div class="stat-label">Global Brand Partners</div>
+        </div>
+        <div class="stat anim-up">
+          <div class="stat-val"><span class="counter" data-target="15">0</span>+</div>
+          <div class="stat-label">Years of Expertise</div>
+        </div>
+        <div class="stat anim-up">
+          <div class="stat-val"><span class="counter" data-target="12">0</span></div>
+          <div class="stat-label">Industry Segments</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SERVICES — Horizontal scroll showcase
+    ============================================= -->
+    <section id="services" class="section section--dark">
+      <div class="services-header container">
+        <span class="label anim-up">What We Do</span>
+        <h2 class="section-title anim-up">Our Core <em>Services</em></h2>
+      </div>
+
+      <div class="services-track-wrap">
+        <div class="services-track" id="servicesTrack">
+
+          <article class="service-card">
+            <div class="service-img">
+              <img src="https://images.unsplash.com/photo-1471997695602-d4f9e3f34327?auto=format&fit=crop&w=800&q=85"
+                   alt="Ingredient Sourcing" loading="lazy" />
+            </div>
+            <div class="service-body">
+              <span class="service-num">01</span>
+              <h3>Ingredient<br />Sourcing</h3>
+              <p>Curating exceptional aroma molecules and refined extracts from global partners to craft a sophisticated sensory foundation.</p>
+              <div class="service-line"></div>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <div class="service-img">
+              <img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=800&q=85"
+                   alt="Custom Formulation" loading="lazy" />
+            </div>
+            <div class="service-body">
+              <span class="service-num">02</span>
+              <h3>Custom<br />Formulation</h3>
+              <p>Advanced formulation by intelligent flavourists and perfumers, engineering molecular composition for application-specific performance.</p>
+              <div class="service-line"></div>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <div class="service-img">
+              <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=800&q=85"
+                   alt="Sensory Validation" loading="lazy" />
+            </div>
+            <div class="service-body">
+              <span class="service-num">03</span>
+              <h3>Sensory<br />Validation</h3>
+              <p>Comprehensive evaluation of stability, diffusion, and sensory integrity to ensure consistent performance across applications.</p>
+              <div class="service-line"></div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         PHILOSOPHY — Full-bleed statement
+    ============================================= -->
+    <section class="section philosophy">
+      <div class="philosophy-bg parallax-img">
+        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1920&q=80"
+             alt="" aria-hidden="true" loading="lazy" />
+      </div>
+      <div class="philosophy-overlay"></div>
+      <div class="philosophy-content container">
+        <blockquote class="philosophy-quote anim-up">
+          "Every formulation is a dialogue between <em>science</em> and <em>artistry</em> — molecules speaking the language of memory."
+        </blockquote>
+        <cite class="anim-up">— The PairSense Philosophy</cite>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SEGMENTS — Mosaic grid
+    ============================================= -->
+    <section id="segments" class="section">
       <div class="container">
-        <p class="clients-label">Trusted By</p>
-        <div class="clients-logos">
+        <span class="label anim-up">Industries We Serve</span>
+        <h2 class="section-title anim-up">Sensory Solutions<br /><em>Across Segments</em></h2>
+      </div>
+
+      <div class="mosaic container">
+
+        <a href="#" class="mosaic-item mosaic-item--tall anim-up">
+          <div class="mosaic-img">
+            <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=700&q=85"
+                 alt="Fine Fragrances" loading="lazy" />
+          </div>
+          <div class="mosaic-info">
+            <span class="mosaic-num">01</span>
+            <h3>Fine Fragrances</h3>
+            <p>Depth, character, and long-lasting performance across premium applications.</p>
+          </div>
+        </a>
+
+        <a href="#" class="mosaic-item anim-up">
+          <div class="mosaic-img">
+            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=700&q=85"
+                 alt="Food Segments" loading="lazy" />
+          </div>
+          <div class="mosaic-info">
+            <span class="mosaic-num">02</span>
+            <h3>Food Segments</h3>
+            <p>Dairy, bakery, confectionery, snacks, and nutraceutical applications.</p>
+          </div>
+        </a>
+
+        <a href="#" class="mosaic-item anim-up">
+          <div class="mosaic-img">
+            <img src="https://images.unsplash.com/photo-1505576399279-565b52d4ac71?auto=format&fit=crop&w=700&q=85"
+                 alt="Seasoning Solutions" loading="lazy" />
+          </div>
+          <div class="mosaic-info">
+            <span class="mosaic-num">03</span>
+            <h3>Seasoning Solutions</h3>
+            <p>Refined seasoning blends for snacks and savory applications.</p>
+          </div>
+        </a>
+
+        <a href="#" class="mosaic-item mosaic-item--wide anim-up">
+          <div class="mosaic-img">
+            <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=85"
+                 alt="Beverage Solutions" loading="lazy" />
+          </div>
+          <div class="mosaic-info">
+            <span class="mosaic-num">04</span>
+            <h3>Beverage Solutions</h3>
+            <p>Tailored flavor systems delivering clarity, balance, and consistent taste across formulations.</p>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- =============================================
+         CLIENTS
+    ============================================= -->
+    <section class="section section--dark clients-section">
+      <div class="container">
+        <span class="label anim-up" style="text-align:center;display:block;">Trusted By</span>
+        <div class="clients-row anim-up">
           <img src="https://pairsense.co/wp-content/uploads/2024/10/L-Client_01.png" alt="Client" />
           <img src="https://pairsense.co/wp-content/uploads/2024/10/L-Client_02.png" alt="Client" />
           <img src="https://pairsense.co/wp-content/uploads/2024/10/L-Client_03.png" alt="Client" />
@@ -152,354 +330,63 @@
       </div>
     </section>
 
-    <!-- ================================================
-         ABOUT
-    ================================================ -->
-    <section id="about" class="section-about">
+    <!-- =============================================
+         JOURNAL (Blog)
+    ============================================= -->
+    <section id="journal" class="section">
       <div class="container">
-        <div class="about-grid">
-
-          <div class="about-img-col">
-            <div class="about-img-wrap clip-reveal">
-              <img
-                src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80"
-                alt="Botanical ingredients"
-                loading="lazy"
-              />
-              <div class="about-float-card glass-card">
-                <div class="float-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14l-4-4 1.41-1.41L12 13.17l6.59-6.59L20 8l-8 8z"/></svg>
-                </div>
-                <div>
-                  <strong>Concept to Creation</strong>
-                  <p>End-to-end sensory development</p>
-                </div>
-              </div>
-            </div>
-            <!-- Floating accent -->
-            <div class="about-accent about-accent-1" data-speed="1.2" aria-hidden="true"></div>
-          </div>
-
-          <div class="about-text-col">
-            <p class="section-label">Who We Are</p>
-            <h2 class="section-heading perspective-reveal">
-              Redefining<br /><em>Sensory</em><br />Experiences
-            </h2>
-            <p class="about-body">
-              We are a flavor and fragrance company focused on developing high-performance sensory solutions tailored to real-world products. From concept to production, we work closely with brands to create distinctive flavor and fragrance profiles that align with their vision, application, and market positioning.
-            </p>
-            <p class="about-body">
-              Defining New-Gen taste and scent across worldwide for ambitious brands.
-            </p>
-            <div class="about-pillars">
-              <div class="pillar">
-                <div class="pillar-dot"></div>
-                <span>Concept to Creation</span>
-              </div>
-              <div class="pillar">
-                <div class="pillar-dot"></div>
-                <span>Ingredient Intelligence</span>
-              </div>
-              <div class="pillar">
-                <div class="pillar-dot"></div>
-                <span>Application Compatibility</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- STATS -->
-        <div class="stats-row">
-          <div class="stat-item">
-            <div class="stat-number-wrap">
-              <span class="stat-num" data-target="200">0</span><span class="stat-suffix">+</span>
-            </div>
-            <p class="stat-label">Formulations Delivered</p>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number-wrap">
-              <span class="stat-num" data-target="50">0</span><span class="stat-suffix">+</span>
-            </div>
-            <p class="stat-label">Global Brand Partners</p>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number-wrap">
-              <span class="stat-num" data-target="15">0</span><span class="stat-suffix">+</span>
-            </div>
-            <p class="stat-label">Years of Expertise</p>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number-wrap">
-              <span class="stat-num" data-target="12">0</span><span class="stat-suffix"></span>
-            </div>
-            <p class="stat-label">Industry Segments</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================================================
-         MARQUEE STRIP
-    ================================================ -->
-    <div class="marquee-section">
-      <div class="marquee-track" aria-hidden="true">
-        <span>Fine Fragrances</span><span class="dot">&#x2726;</span>
-        <span>Dairy &amp; Bakery</span><span class="dot">&#x2726;</span>
-        <span>Beverage Solutions</span><span class="dot">&#x2726;</span>
-        <span>Seasoning Solutions</span><span class="dot">&#x2726;</span>
-        <span>Confectionery</span><span class="dot">&#x2726;</span>
-        <span>Snacks &amp; Savory</span><span class="dot">&#x2726;</span>
-        <span>Nutraceuticals</span><span class="dot">&#x2726;</span>
-        <span>Fine Fragrances</span><span class="dot">&#x2726;</span>
-        <span>Dairy &amp; Bakery</span><span class="dot">&#x2726;</span>
-        <span>Beverage Solutions</span><span class="dot">&#x2726;</span>
-        <span>Seasoning Solutions</span><span class="dot">&#x2726;</span>
-        <span>Confectionery</span><span class="dot">&#x2726;</span>
-        <span>Snacks &amp; Savory</span><span class="dot">&#x2726;</span>
-        <span>Nutraceuticals</span><span class="dot">&#x2726;</span>
-      </div>
-    </div>
-
-    <!-- ================================================
-         CORE SERVICES — Interactive split-panel accordion
-    ================================================ -->
-    <section id="services" class="section-services">
-      <div class="container">
-
-        <div class="services-intro">
-          <p class="section-label">What We Do</p>
-          <h2 class="section-heading perspective-reveal">Our Core <em>Services</em></h2>
-        </div>
-
-        <div class="services-split">
-
-          <!-- Left: accordion list -->
-          <div class="services-list" id="servicesList">
-
-            <div class="svc-item active" data-idx="0">
-              <div class="svc-item-top">
-                <span class="svc-item-num">01</span>
-                <div class="svc-item-mid">
-                  <div class="svc-item-icon">
-                    <img src="https://pairsense.co/wp-content/uploads/2026/04/1-e1775446355880.png"
-                         alt="Ingredient Sourcing" onerror="this.style.display='none'" />
-                  </div>
-                  <h3>Ingredient Sourcing</h3>
-                </div>
-                <span class="svc-item-chevron">
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-              </div>
-              <div class="svc-item-desc">
-                <p>Curating exceptional aroma molecules and refined extracts from global partners to craft a sophisticated and enduring sensory foundation.</p>
-              </div>
-            </div>
-
-            <div class="svc-item" data-idx="1">
-              <div class="svc-item-top">
-                <span class="svc-item-num">02</span>
-                <div class="svc-item-mid">
-                  <div class="svc-item-icon">
-                    <img src="https://pairsense.co/wp-content/uploads/2026/04/2-e1775446339360.png"
-                         alt="Custom Formulation" onerror="this.style.display='none'" />
-                  </div>
-                  <h3>Custom Formulation</h3>
-                </div>
-                <span class="svc-item-chevron">
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-              </div>
-              <div class="svc-item-desc">
-                <p>Advanced formulation by intelligent flavourists and perfumers, engineering high-precision molecular composition tailored for application-specific performance, consistency and scalability.</p>
-              </div>
-            </div>
-
-            <div class="svc-item" data-idx="2">
-              <div class="svc-item-top">
-                <span class="svc-item-num">03</span>
-                <div class="svc-item-mid">
-                  <div class="svc-item-icon">
-                    <img src="https://pairsense.co/wp-content/uploads/2026/04/3-e1775446378363.png"
-                         alt="Sensory Validation" onerror="this.style.display='none'" />
-                  </div>
-                  <h3>Sensory Validation</h3>
-                </div>
-                <span class="svc-item-chevron">
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-              </div>
-              <div class="svc-item-desc">
-                <p>Comprehensive evaluation of stability, diffusion, and sensory integrity to ensure consistent performance across real-world applications and production environments.</p>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Right: cinematic image panel -->
-          <div class="services-visual-panel depth-card">
-            <div class="svc-vp-img active" data-panel="0">
-              <img src="https://images.unsplash.com/photo-1471997695602-d4f9e3f34327?auto=format&fit=crop&w=1000&q=90"
-                   alt="Ingredient Sourcing — botanical ingredients" loading="eager" />
-              <div class="svc-vp-overlay"></div>
-              <div class="svc-vp-caption">
-                <span class="svc-vp-num">01</span>
-                <span class="svc-vp-label">Ingredient Sourcing</span>
-              </div>
-            </div>
-            <div class="svc-vp-img" data-panel="1">
-              <img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=1000&q=90"
-                   alt="Custom Formulation — fragrance creation" loading="lazy" />
-              <div class="svc-vp-overlay"></div>
-              <div class="svc-vp-caption">
-                <span class="svc-vp-num">02</span>
-                <span class="svc-vp-label">Custom Formulation</span>
-              </div>
-            </div>
-            <div class="svc-vp-img" data-panel="2">
-              <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=1000&q=90"
-                   alt="Sensory Validation — quality testing" loading="lazy" />
-              <div class="svc-vp-overlay"></div>
-              <div class="svc-vp-caption">
-                <span class="svc-vp-num">03</span>
-                <span class="svc-vp-label">Sensory Validation</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ================================================
-         SEGMENTS — drag-to-scroll immersive cards
-    ================================================ -->
-    <section id="segments" class="section-segments">
-      <div class="container">
-        <p class="section-label">Industries We Serve</p>
-        <h2 class="section-heading perspective-reveal">Sensory Solutions<br /><em>Across Segments</em></h2>
-      </div>
-
-      <div class="segments-track-outer">
-        <div class="segments-track" id="segmentsTrack">
-
-          <div class="seg-card tilt-card">
-            <div class="seg-img">
-              <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=700&q=85"
-                   alt="Fine Fragrances" loading="lazy" />
-            </div>
-            <div class="seg-info">
-              <span class="seg-num">01</span>
-              <h3>Fine Fragrances</h3>
-              <p>Fine fragrances designed for depth, character, and long-lasting performance across premium applications.</p>
-            </div>
-          </div>
-
-          <div class="seg-card tilt-card">
-            <div class="seg-img">
-              <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=700&q=85"
-                   alt="Food Segments" loading="lazy" />
-            </div>
-            <div class="seg-info">
-              <span class="seg-num">02</span>
-              <h3>Food Segments</h3>
-              <p>Dairy, bakery and confectionery, snacks and savory, processed foods, and nutraceutical applications.</p>
-            </div>
-          </div>
-
-          <div class="seg-card tilt-card">
-            <div class="seg-img">
-              <img src="https://images.unsplash.com/photo-1505576399279-565b52d4ac71?auto=format&fit=crop&w=700&q=85"
-                   alt="Seasoning Solutions" loading="lazy" />
-            </div>
-            <div class="seg-info">
-              <span class="seg-num">03</span>
-              <h3>Seasoning Solutions</h3>
-              <p>Crafting refined seasoning blends for snacks and savory applications, delivering depth, balance, and a consistent taste experience.</p>
-            </div>
-          </div>
-
-          <div class="seg-card tilt-card">
-            <div class="seg-img">
-              <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=700&q=85"
-                   alt="Beverage Solutions" loading="lazy" />
-            </div>
-            <div class="seg-info">
-              <span class="seg-num">04</span>
-              <h3>Beverage Solutions</h3>
-              <p>Developing tailored flavor systems for beverages, designed to deliver clarity, balance, and consistent taste across diverse formulations.</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ================================================
-         BLOG / INSIGHTS
-    ================================================ -->
-    <section id="blog" class="section-blog">
-      <div class="container">
-        <div class="blog-header">
+        <div class="journal-header">
           <div>
-            <p class="section-label">Latest from Us</p>
-            <h2 class="section-heading perspective-reveal">Flavorful <em>Insights</em></h2>
+            <span class="label anim-up">Latest</span>
+            <h2 class="section-title anim-up">From the <em>Journal</em></h2>
           </div>
-          <a href="/blog-list/" class="btn btn-outline magnetic-btn">View All</a>
+          <a href="/blog-list/" class="btn-ghost magnetic anim-up">View All</a>
         </div>
 
-        <div class="blog-grid">
+        <div class="journal-grid">
 
-          <article class="blog-card blog-card--featured tilt-card">
-            <div class="blog-img">
+          <article class="journal-card journal-card--featured anim-up">
+            <div class="journal-img">
               <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80"
                    alt="Blog" loading="lazy" />
             </div>
-            <div class="blog-body">
-              <span class="blog-tag">Blog</span>
+            <div class="journal-body">
+              <span class="journal-tag">Blog</span>
               <h3>Top 5 challenges in modern drug discovery</h3>
-              <p class="blog-excerpt">Sed ut perspiciatis unde omnis iste natus ut perspic iatis...</p>
-              <div class="blog-meta">
-                <time>September 24, 2024</time>
-                <a href="/top-5-challenges-in-modern-drug-discovery/" class="read-link">Read &rarr;</a>
+              <p>Sed ut perspiciatis unde omnis iste natus ut perspic iatis...</p>
+              <div class="journal-footer">
+                <time>Sep 24, 2024</time>
+                <span class="read-arrow">&rarr;</span>
               </div>
             </div>
           </article>
 
-          <article class="blog-card tilt-card">
-            <div class="blog-img">
+          <article class="journal-card anim-up">
+            <div class="journal-img">
               <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=600&q=80"
                    alt="Blog" loading="lazy" />
             </div>
-            <div class="blog-body">
-              <span class="blog-tag">Blog</span>
+            <div class="journal-body">
+              <span class="journal-tag">Blog</span>
               <h3>From concept to cure: drug discovery steps</h3>
-              <p class="blog-excerpt">Sed ut perspiciatis unde omnis iste natus ut perspic iatis...</p>
-              <div class="blog-meta">
-                <time>September 23, 2024</time>
-                <a href="/from-concept-to-cure-drug-discovery-steps/" class="read-link">Read &rarr;</a>
+              <div class="journal-footer">
+                <time>Sep 23, 2024</time>
+                <span class="read-arrow">&rarr;</span>
               </div>
             </div>
           </article>
 
-          <article class="blog-card tilt-card">
-            <div class="blog-img">
+          <article class="journal-card anim-up">
+            <div class="journal-img">
               <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=600&q=80"
                    alt="Blog" loading="lazy" />
             </div>
-            <div class="blog-body">
-              <span class="blog-tag">Blog</span>
+            <div class="journal-body">
+              <span class="journal-tag">Blog</span>
               <h3>Emerging trends in targeted drug discovery</h3>
-              <p class="blog-excerpt">Sed ut perspiciatis unde omnis iste natus ut perspic iatis...</p>
-              <div class="blog-meta">
-                <time>September 22, 2024</time>
-                <a href="/emerging-trends-in-targeted-drug-discovery/" class="read-link">Read &rarr;</a>
+              <div class="journal-footer">
+                <time>Sep 22, 2024</time>
+                <span class="read-arrow">&rarr;</span>
               </div>
             </div>
           </article>
@@ -508,102 +395,87 @@
       </div>
     </section>
 
-    <!-- ================================================
-         CTA BAND
-    ================================================ -->
-    <section class="section-cta">
-      <div class="cta-img-bg">
-        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1920&q=80"
-             alt="" aria-hidden="true" loading="lazy" />
-        <div class="cta-overlay"></div>
-      </div>
-      <div class="container">
-        <div class="cta-content">
-          <p class="section-label" style="color:rgba(255,255,255,0.55);">Ready to Begin?</p>
-          <h2>Have questions?<br /><em>Get in touch!</em></h2>
-          <div class="cta-btns">
-            <a href="/contact/" class="btn btn-white magnetic-btn">Send Brief</a>
-            <a href="/request-a-quote/" class="btn btn-outline-white magnetic-btn">Request a Quote</a>
-          </div>
+    <!-- =============================================
+         CTA — Full-screen dramatic
+    ============================================= -->
+    <section class="section cta-section">
+      <div class="cta-content container">
+        <span class="label anim-up" style="color:rgba(255,255,255,0.4);">Ready to Begin?</span>
+        <h2 class="cta-title anim-up">
+          Let's create something<br /><em>extraordinary.</em>
+        </h2>
+        <div class="cta-actions anim-up">
+          <a href="#contact" class="btn-main magnetic">Get in Touch</a>
+          <a href="/request-a-quote/" class="btn-ghost magnetic">Request a Quote</a>
         </div>
       </div>
     </section>
 
-    <!-- ================================================
+    <!-- =============================================
          CONTACT
-    ================================================ -->
-    <section id="contact" class="section-contact">
-      <div class="container">
-        <div class="contact-grid">
+    ============================================= -->
+    <section id="contact" class="section section--dark">
+      <div class="contact-layout container">
 
-          <div class="contact-img-col clip-reveal">
-            <img
-              src="https://pairsense.co/wp-content/uploads/2026/04/Contact-819x1024.jpg"
-              alt="Contact PairSense"
-              loading="lazy"
-            />
+        <div class="contact-left">
+          <span class="label anim-up">Contact</span>
+          <h2 class="section-title anim-up">Have questions?<br /><em>Get in touch.</em></h2>
+
+          <div class="contact-details anim-up">
+            <div class="detail">
+              <span class="detail-label">Address</span>
+              <span>No.4, Gayathri Nagar, Ayappakkam, Chennai – 600077</span>
+            </div>
+            <div class="detail">
+              <span class="detail-label">Phone</span>
+              <span>+91 97898 18956 / +91 88388 17925</span>
+            </div>
+            <div class="detail">
+              <span class="detail-label">Email</span>
+              <span><a href="mailto:connect@pairsense.co">connect@pairsense.co</a></span>
+            </div>
           </div>
+        </div>
 
-          <div class="contact-form-col">
-            <p class="section-label">Get In Touch</p>
-            <h2 class="section-heading perspective-reveal">Have questions?<br /><em>Get in touch!</em></h2>
-
-            <div class="contact-info-list">
-              <div class="ci">
-                <span class="ci-label">Address</span>
-                <span>No.4, Gayathri Nagar, Ayappakkam, Chennai – 600077</span>
+        <div class="contact-right anim-up">
+          <form id="contactForm" novalidate>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="fname">First Name</label>
+                <input type="text" id="fname" name="fname" placeholder="Jane" required />
               </div>
-              <div class="ci">
-                <span class="ci-label">Phone</span>
-                <span>+91 97898 18956 &nbsp;/&nbsp; +91 88388 17925</span>
-              </div>
-              <div class="ci">
-                <span class="ci-label">Email</span>
-                <span>
-                  <a href="mailto:connect@pairsense.co">connect@pairsense.co</a>
-                  &nbsp;/&nbsp;
-                  <a href="mailto:sachin@pairsense.co">sachin@pairsense.co</a>
-                </span>
+              <div class="form-field">
+                <label for="lname">Last Name</label>
+                <input type="text" id="lname" name="lname" placeholder="Smith" required />
               </div>
             </div>
-
-            <form class="contact-form" id="contactForm" novalidate>
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="fname">First Name</label>
-                  <input type="text" id="fname" name="fname" placeholder="Jane" required />
-                </div>
-                <div class="form-group">
-                  <label for="lname">Last Name</label>
-                  <input type="text" id="lname" name="lname" placeholder="Smith" required />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" placeholder="jane@company.com" required />
-              </div>
-              <div class="form-group">
-                <label for="message">Message</label>
-                <textarea id="message" name="message" rows="4" placeholder="Tell us about your project..." required></textarea>
-              </div>
-              <div class="form-check">
-                <input type="checkbox" id="privacy" name="privacy" required />
-                <label for="privacy">I agree to the Privacy Policy and consent to being contacted by PairSense.</label>
-              </div>
-              <button type="submit" class="btn btn-primary btn-full magnetic-btn">Send Message</button>
-            </form>
-          </div>
-
+            <div class="form-field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="jane@company.com" required />
+            </div>
+            <div class="form-field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="4" placeholder="Tell us about your project..." required></textarea>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" id="privacy" name="privacy" required />
+              <label for="privacy">I agree to the Privacy Policy and consent to being contacted.</label>
+            </div>
+            <button type="submit" class="btn-main btn-full magnetic">Send Message</button>
+          </form>
         </div>
+
       </div>
     </section>
 
   </main>
 
-  <!-- FOOTER -->
+  <!-- =============================================
+       FOOTER
+  ============================================= -->
   <footer id="footer">
     <div class="container">
-      <div class="footer-top">
+      <div class="footer-grid">
         <div class="footer-brand">
           <img src="https://pairsense.co/wp-content/uploads/2026/04/PairSense-Logo-scaled-e1775438482522.png"
                alt="PairSense" class="footer-logo"
@@ -614,47 +486,39 @@
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
             </a>
             <a href="https://www.instagram.com/pairsense" aria-label="Instagram" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/></svg>
             </a>
             <a href="https://www.linkedin.com/company/pairsense/" aria-label="LinkedIn" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
             </a>
-            <a href="https://x.com/Sachinpairsense" aria-label="Twitter/X" target="_blank" rel="noopener">
+            <a href="https://x.com/Sachinpairsense" aria-label="X" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
             </a>
           </div>
         </div>
 
-        <div class="footer-links">
-          <div class="fl-col">
-            <h5>Company</h5>
-            <ul>
-              <li><a href="#about">About Us</a></li>
-              <li><a href="#services">Our Services</a></li>
-              <li><a href="#segments">Segments</a></li>
-            </ul>
-          </div>
-          <div class="fl-col">
-            <h5>Resources</h5>
-            <ul>
-              <li><a href="#blog">Blog</a></li>
-              <li><a href="/blog-list/">All Articles</a></li>
-            </ul>
-          </div>
-          <div class="fl-col">
-            <h5>Contact</h5>
-            <ul>
-              <li><a href="#contact">Get in Touch</a></li>
-              <li><a href="/contact/">Send Brief</a></li>
-              <li><a href="/request-a-quote/">Request a Quote</a></li>
-            </ul>
-          </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a href="#about">About Us</a>
+          <a href="#services">Our Services</a>
+          <a href="#segments">Segments</a>
+        </div>
+        <div class="footer-col">
+          <h5>Resources</h5>
+          <a href="#journal">Journal</a>
+          <a href="/blog-list/">All Articles</a>
+        </div>
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <a href="#contact">Get in Touch</a>
+          <a href="/contact/">Send Brief</a>
+          <a href="/request-a-quote/">Request a Quote</a>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <span>PAIRSENSE &copy; 2026. All rights reserved.</span>
-        <span>No.4, Gayathri Nagar, Ayappakkam, Chennai – 600077</span>
+        <span>PAIRSENSE &copy; 2026</span>
+        <span>Chennai, India</span>
       </div>
     </div>
   </footer>
@@ -662,7 +526,6 @@
   <!-- SCRIPTS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
